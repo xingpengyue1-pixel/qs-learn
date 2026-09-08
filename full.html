@@ -48,7 +48,7 @@ details{margin:6px 0}summary{cursor:pointer;font-weight:500}
 .hide{display:none}
 </style>
 </head>
-<body>
+<body><aside style="padding:14px 20px;background:#edf4f2;color:#176459;font:14px sans-serif;line-height:1.6">日报请使用<a href="daily.html">新版工作总结</a>。学习结果与其他旧版表单请按页面内容在飞书手动填写；链接不再携带个人填写内容。</aside>
 <header><h1>潜势绩效台</h1><div class="who" id="who"></div></header>
 <main id="main"></main>
 <nav id="nav">
@@ -104,7 +104,7 @@ function render(){document.querySelectorAll('#nav button').forEach(b=>b.classLis
 function bind(root){root.querySelectorAll('[data-act]').forEach(el=>{el.addEventListener(el.tagName==='INPUT'||el.tagName==='SELECT'||el.tagName==='TEXTAREA'?'change':'click',ev=>ACT[el.dataset.act](el,ev));});}
 const FS=DATA.fs;const myEmp=()=>FS.emps.find(e=>e.code===profile.code);
 const isoWeek=d=>{const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return t.getUTCFullYear()+'-W'+String(Math.ceil(((t-y)/864e5+1)/7)).padStart(2,'0');};
-const pre=(u,kv)=>u.split('?')[0]+'?'+Object.keys(kv).map(k=>'prefill_'+encodeURIComponent(k)+'='+encodeURIComponent(kv[k])).join('&');
+const pre=(u,kv)=>u.split('?')[0]; // 复核内容不进入URL；按页面结果在飞书填写。
 const viewUrl=(tn)=>{const e=myEmp();if(!e||!FS.views[e.code]||!FS.views[e.code][tn])return '';return FS.base+'?table='+FS.tables[tn]+'&view='+FS.views[e.code][tn];};
 function nextNode(){const d=new Date(),day=d.getDate();const nodes=[[5,'打分人初评截止'],[10,'复核与财务验算截止'],[15,'签字知悉与申诉窗']];for(const [n,l] of nodes){if(day<=n)return {days:n-day,label:l,day:n};}const nx=new Date(d.getFullYear(),d.getMonth()+1,5);return {days:Math.round((nx-d)/864e5),label:'打分人初评截止',day:5};}
 function vHome(){const e=myEmp();let h='';
@@ -204,7 +204,7 @@ function vRec(){let h='<div class="card"><h2>自测记录 <span class="muted">'+
  h+='<div class="card"><h2>多维表格表单链接(负责人发给你)</h2><p class="muted">表单链接已预置;若负责人换了表单再改。「带入表单」会打开预填好的学习记录表单。</p><label class="f">学习记录表单</label><input data-act="setform" data-k="formLearn" value="'+esc(settings.formLearn)+'" placeholder="https://…feishu.cn/share/base/form/…"><label class="f">每日工作记录表单</label><input data-act="setform" data-k="formDaily" value="'+esc(settings.formDaily)+'"><label class="f">周 check-in 表单</label><input data-act="setform" data-k="formCheckin" value="'+esc(settings.formCheckin)+'">';
  h+='<div class="row" style="margin-top:10px">'+(settings.formDaily?'<a class="btn" href="'+esc(settings.formDaily)+'" target="_blank">填今天日报</a>':'')+(settings.formCheckin?'<a class="btn" href="'+esc(settings.formCheckin)+'" target="_blank">发本周 check-in</a>':'')+(settings.formOffset?'<a class="btn s" href="'+esc(settings.formOffset)+'" target="_blank">折抵申请</a>':'')+(settings.formAppeal?'<a class="btn s" href="'+esc(settings.formAppeal)+'" target="_blank">申诉</a>':'')+(settings.base?'<a class="btn s" href="'+esc(settings.base)+'" target="_blank">打开考评表</a>':'')+'</div><p class="muted">链接已由负责人预置(2026-09-06 建库),一般不用改。</p></div>';
  return h;}
-function formLink(a){if(!settings.formLearn)return null;const base=settings.formLearn.split('?')[0];const q=[['课程编号',a.course],['自测得分',a.score],['红线题错数',a.veto],['自测日期',a.date],['题集',a.label],['自评结果',a.pass?'通过':'未通过']].map(x=>'prefill_'+encodeURIComponent(x[0])+'='+encodeURIComponent(x[1])).join('&');return base+'?'+q;}
+function formLink(a){return settings.formLearn?settings.formLearn.split('?')[0]:null;}
 function vHelp(){const p=DATA.params;let h='<div class="card"><h2>这个台子是什么</h2><p>员工用的唯一入口:今天要做的三件事(日报、check-in、折抵/申诉)、本岗 KPI 与自算、只看自己的飞书视图、学习与自测。制度以成品 V1.7 为准。原学习功能:它只做三件事:学(公共基础 + 本岗 + 播前闸 + 数据闸 + 制度)、测(通过 = 分数 + 红线零错)、算(KPI 自算器)。考评本身在飞书多维表格里跑,这里的结果要「带入表单」并经带教签字才算数。</p></div>';
  h+='<div class="card"><h2>学习怎么算通过</h2><p>'+DATA.accept.pass+'</p><table><tr><th>级</th><th>标准</th><th>能做什么</th></tr>'+DATA.accept.levels.map(l=>'<tr><td>'+l[0]+'</td><td>'+l[1]+'</td><td>'+l[2]+'</td></tr>').join('')+'</table><h3>五条一票否决</h3><ul class="small">'+DATA.accept.veto.map(v=>'<li>'+v+'</li>').join('')+'</ul></div>';
  h+='<div class="card"><h2>考评怎么算(员工版)</h2><table class="kv"><tr><td>季度 OKR</td><td>公开自评,不挂钱,KR 0.6~0.7 为好</td></tr><tr><td>月度 KPI</td><td>决定综合薪资 '+Math.round(p.perf_share*100)+'% 的绩效工资;取档 1.0 / 0.9 / 0.7 / 待定</td></tr><tr><td>主播时长</td><td>每月 '+p.anchor_hours+' 小时;支援折抵事前批准、上限 '+p.offset_cap+' 小时</td></tr><tr><td>行为项 KCI</td><td>出勤、日报有效率、交付准时、SOP 执行;只调半年档位,不计分</td></tr><tr><td>红线</td><td>平台合规、甲方投诉或口径;五步处理,不自动清零</td></tr><tr><td>半年五档</td><td>'+DATA.tiers.map(t=>t[0]).join(' / ')+';多数人 M;不排名</td></tr><tr><td>月度节律</td><td>次月 5 日初评、10 日复核验算、15 日签字与申诉窗</td></tr><tr><td>申诉</td><td>'+p.appeal_submit_days+' 个工作日内提交,PMO '+p.appeal_accept_days+' 个工作日受理,'+p.appeal_reply_days+' 个工作日内答复;申诉期间不扣发</td></tr><tr><td>学习与考评的接口</td><td>新人前三个月、冷启期与淡季走 C 路线,学习里程碑进 KPI 表;调岗或改进期须有培训辅导记录</td></tr></table></div>';

@@ -8,3 +8,5 @@ assert.equal(parse('1.直播25小时').alerts[0].code,'R01');
 assert.equal(parse('1.直播1e3小时').alerts[0].code,'R01');
 const fs=require('node:fs');for(const name of ['daily.html','index.html']){const s=fs.readFileSync(name,'utf8');for(const word of ['prefill_日报原文','prefill_成果链接','prefill_工时异常说明'])assert(!s.includes(word));assert(s.includes(fs.readFileSync('diary_parser.js','utf8')));}
 console.log('Parser boundaries and public handoff privacy passed');
+
+assert(!fs.readFileSync('full.html','utf8').includes('prefill_'));
