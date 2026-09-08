@@ -101,7 +101,7 @@ function render(){
  h+='<div class="card"><h2>今天(约 30 秒)</h2>';
  if(asks.length){asks.forEach(k=>{h+='<div class="q"><label>'+esc(k.q)+'</label><input type="number" inputmode="decimal" data-a="v" data-id="'+k.id+'" value="'+esc(draft.vals[k.id]||'')+'" placeholder="'+esc(k.unit||'')+'"></div>';});}
  else h+='<p class="muted">你的岗位当月不按日计数,直接写一句话即可。</p>';
- h+='<label class="f">今天做了什么(可选,一句话或直接粘贴你原来的写法)</label><textarea data-a="text" rows="3" placeholder="例:留资36条,剪辑2条,下午支援音乐节3小时">'+esc(draft.text)+'</textarea>';
+ h+='<label class="f">今天做了什么(可选,一句话或直接粘贴你原来的写法)</label><textarea data-a="text" rows="3" placeholder="例:留资36条,剪辑2条,下午支援项目3小时">'+esc(draft.text)+'</textarea>';
  const hits=draft.text?detect(draft.text):[];
  if(hits.length){h+='<p class="muted" style="margin-top:8px">自动识别到(勾掉不要的):</p>';hits.forEach((x,i)=>{h+='<div class="hit"><input type="checkbox" data-a="hit" data-i="'+i+'" '+(draft.off&&draft.off[x.id]?'':'checked')+'><div><b>'+esc(x.name)+' '+x.val+esc(x.unit)+'</b><br><span class="muted">'+esc(x.seg)+'</span></div></div>';});}
  if(draft.text&&supportHit(draft.text)&&me().cat==='主播')h+='<p class="muted"><span class="tag amber">支援</span>识别到支援类工作,提交后会生成折抵申请草稿给批准人,你不用另外填表。</p>';
