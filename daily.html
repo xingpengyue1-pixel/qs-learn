@@ -5,11 +5,11 @@
 <section id="preview" class="hide"><div class="panel"><h2>2 · 核对识别结果</h2><div class="numbers"><div class="number"><strong id="itemCount"></strong><span>项工作</span></div><div class="number"><strong id="hours"></strong><span>申报小时 · 不直接计分</span></div><div class="number"><strong id="unknown"></strong><span>段项目待归类</span></div></div><div class="row"><div><label for="date">这份日报的实际日期</label><input id="date" type="date"></div><div><label for="batchProject">未明确项目的事项，统一归到</label><select id="batchProject"><option value="">逐项选择，或保留待归类</option></select></div></div><p id="dateBasis" class="muted"></p><div id="flags" class="warning hide"></div><p class="muted">已明确的跨项目工时分别保留。「其他待归类」可提交给负责人核对；未知工时留空。数量和完成进度按原事项保留。</p></div><div id="items"></div><div class="panel"><h3>今日收获</h3><div id="harvest" class="original"></div><p class="muted">保留原文，用于复盘，不按字数或措辞打分。</p><label for="evidence">成果链接（可选）</label><input id="evidence" type="url" placeholder="https://…"><div class="footer"><span class="muted">登录飞书后，再点表单内的「提交」。<br>更正日报：重新提交本人当天完整内容。</span><button id="submit">到飞书提交 ↗</button></div><div id="message" class="message" role="status"></div><a id="plainForm" class="hide" target="_blank" rel="noopener" href="https://p4670xzmqg.feishu.cn/share/base/shrcnEA5RouVdCaOEGHikPnNrub">打开飞书表单，粘贴原文并填写日期</a></div></section><footer>工作原文 → 事项台账 → 月度复核 → 本人确认。工作时长、招聘沟通数、内容数量和进度分别记录，由负责人结合成果核验。</footer></main><script>/* 同一识别器用于浏览器预览与后台；不发起网络请求。 */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.DiaryParser=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
-const VERSION='2.0.0';
+const VERSION='2.0.1';
 const PROJECTS=['呼市移动','果然好酒','公司职能','其他待归类'];
 const round=n=>Math.round(n*10000)/10000;
 function validDate(y,m,d){const t=new Date(Date.UTC(y,m-1,d));return t.getUTCFullYear()===y&&t.getUTCMonth()===m-1&&t.getUTCDate()===d;}
-function dateValue(s){const m=s.trim().match(/^(20\d{2})(?:[.\/-](\d{1,2})[.\/-](\d{1,2})|(\d{2})(\d{2}))$/);if(!m)return null;const y=+m[1],mo=+(m[2]||m[4]),d=+(m[3]||m[5]);return {raw:s,date:validDate(y,mo,d)?`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`:null,year:y,month:mo,day:d};}
+function dateValue(s){const m=s.trim().replace(/\\\s*$/,'').trim().match(/^(20\d{2})(?:[.\/-](\d{1,2})[.\/-](\d{1,2})|(\d{2})(\d{2}))$/);if(!m)return null;const y=+m[1],mo=+(m[2]||m[4]),d=+(m[3]||m[5]);return {raw:s,date:validDate(y,mo,d)?`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`:null,year:y,month:mo,day:d};}
 function category(s){
  if(/助播/.test(s))return '助播';
  if(/调试|开.*直播间|直播间.*准备/.test(s))return '直播准备';
