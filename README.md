@@ -1,1 +1,7 @@
-qianshi learning desk · static single-file app · internal tool, noindex
+# 潜势每日工作应用
+
+主入口：<https://xingpengyue1-pixel.github.io/qs-learn/daily.html>。根入口同步为新版日报；学习中心保留在 full.html。
+
+2.2 版本支持小时、分钟及混合时长。异常只提醒核查，不自动判定效率、虚报或绩效分。日报只在浏览器中解析，复制后由本人在飞书表单粘贴提交。链接不携带日报、成果链接、项目明细或工时解释。
+
+测试：`node test-parser.cjs`。本仓库仅包含网页、通用识别器与合成测试，不包含真实日报、账号凭证或后台部署配置。学习中心为既有历史内容，其制度参数需以公司现行有效制度为准。

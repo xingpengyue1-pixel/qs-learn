@@ -1,159 +1,139 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0b57d0">
-<title>今天 · 潜势绩效台 V3.0</title>
-<style>
-:root{--bg:#f5f6f8;--card:#fff;--ink:#1c1c1e;--sub:#6b7280;--line:#e5e7eb;--blue:#0b57d0;--green:#1b7f3b;--amber:#b26a00;--r:14px}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;-webkit-text-size-adjust:100%}
-header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;justify-content:space-between;align-items:center}
-header h1{font-size:17px;margin:0}header .who{font-size:13px;color:var(--sub)}
-main{padding:12px 14px calc(28px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
-.card{background:var(--card);border-radius:var(--r);padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.card h2{font-size:16px;margin:0 0 10px}
-.muted{color:var(--sub);font-size:13px}.small{font-size:13px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.btn{display:inline-block;border:1px solid var(--blue);color:var(--blue);background:#fff;border-radius:10px;padding:10px 14px;font-size:15px;cursor:pointer;text-decoration:none}
-.btn.p{background:var(--blue);color:#fff}.btn.s{border-color:var(--line);color:var(--ink)}.btn.big{display:block;text-align:center;font-size:17px;padding:14px}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:17px;background:#fff;color:var(--ink)}
-input[type=number]{font-size:22px;font-weight:600;text-align:center}
-label.f{display:block;margin:10px 0 4px;font-size:14px;color:var(--sub)}
-.q{display:flex;align-items:center;gap:10px;margin:10px 0}.q label{flex:1;font-size:16px}.q input{width:110px;flex:none}
-.tag{display:inline-block;font-size:12px;border-radius:6px;padding:2px 8px;background:#eef2ff;color:#3730a3;margin-right:4px}
-.tag.green{background:#e6f4ea;color:var(--green)}.tag.amber{background:#fff4e5;color:var(--amber)}
-.hit{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;display:flex;gap:10px;align-items:center}
-.hit input{width:20px;height:20px;flex:none}.hit b{font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{background:#f8fafc;border-radius:10px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:var(--sub)}
-details{margin-top:12px}summary{cursor:pointer;color:var(--sub);font-size:14px}
-.toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#1c1c1e;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.2s;z-index:9;pointer-events:none}.toast.on{opacity:.95}
-.done{background:#e6f4ea;border-radius:10px;padding:10px 12px;color:var(--green);font-size:14px;margin-bottom:10px}
-.foot{font-size:12px;color:var(--sub);text-align:center;padding:8px 0 0}
-</style>
-</head>
-<body><aside id="diary-v2-entry" style="padding:18px 22px;background:#176459;color:white;position:relative;z-index:10;font-family:system-ui;line-height:1.6"><strong>每日工作总结已升级</strong>　直接粘贴微信群日报，核对后提交。 <a href="daily.html" style="display:inline-block;background:white;color:#176459;border-radius:8px;padding:8px 14px;font-weight:700;text-decoration:none">打开新版日报入口 →</a></aside>
-<header><h1>今天</h1><div class="who" id="who"></div></header>
-<main id="main"></main>
-<div class="toast" id="toast"></div>
-<script>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>今天的工作总结 · 潜势</title><link rel="icon" href="data:,"><style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#172536;background:#f3f6f9;font-size:16px}*{box-sizing:border-box}body{margin:0}main{max-width:1000px;margin:auto;padding:36px 22px 70px}header{display:flex;justify-content:space-between;align-items:center;gap:15px}a{color:#176459}h1{font-size:34px;letter-spacing:-1px;margin:34px 0 12px}h2{font-size:20px;margin:0 0 18px}h3{font-size:17px;margin:0 0 12px}.sub{color:#5d6d7d;line-height:1.7;margin-bottom:25px}.brand{font-weight:700;color:#176459}.tag{font-size:13px;color:#687b89}.panel,.item{background:white;border:1px solid #dce4eb;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 4px 15px #13253504}label{display:block;font-weight:600;margin:16px 0 8px}textarea,input,select{font:inherit;width:100%;border:1px solid #b9c7d1;border-radius:9px;padding:12px;background:#fff;color:#172536}textarea{min-height:235px;line-height:1.7;resize:vertical}button,.button{font:inherit;border:0;border-radius:10px;background:#176459;color:#fff;padding:13px 22px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#e9f1ef;color:#176459}.row{display:flex;gap:14px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:170px}.muted{font-size:13px;color:#657687;line-height:1.65}.warning{background:#fff4df;color:#78510e;padding:12px 16px;border-radius:9px;line-height:1.65;white-space:pre-line;margin:15px 0}.numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.number{padding:16px;background:#edf4f2;border-radius:12px;color:#176459}.number strong{display:block;font-size:28px;margin-bottom:7px}.number span{font-size:13px}.original{line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}.facts{font-size:14px;color:#526577;line-height:1.7}.segment{display:grid;grid-template-columns:1fr 170px;gap:15px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid #e5eaee}.segment label{margin:0;font-weight:400;font-size:13px;color:#596c7e}.footer{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:25px}.hide{display:none!important}.message{font-size:14px;white-space:pre-line;line-height:1.8}input[type=checkbox]{width:auto}footer{margin-top:28px;color:#71808f;font-size:12px;line-height:1.7}@media(max-width:600px){main{padding:22px 15px 40px}h1{font-size:28px;margin-top:26px}.panel,.item{padding:18px;border-radius:14px}.numbers{gap:6px}.number{padding:12px}.number strong{font-size:23px}.segment{grid-template-columns:1fr}.row>*{min-width:100%}header a{font-size:12px}}
+</style></head><body><main><header><span class="brand">潜势 · 每日工作 <small>2.2</small></span><a href="https://xingpengyue1-pixel.github.io/qs-learn/full.html" target="_blank" rel="noopener">学习中心 ↗</a><a href="https://p4670xzmqg.feishu.cn/base/UhVfbIpzFaZrLAs3NOtcoiCfnEm" target="_blank" rel="noopener">负责人工作台 ↗</a></header><h1>把今天的总结，粘贴进来。</h1><p class="sub">照常写微信群日报，无需换模板。核对日期、工时和项目后，到飞书提交一次。</p>
+<section class="panel"><h2>1 · 粘贴本人当天日报</h2><label for="raw">工作总结原文</label><textarea id="raw" placeholder="粘贴日期、工作总结和今日收获。每人每天提交一份完整日报。"></textarea><p class="muted">识别在当前页面完成。页面不保存草稿。点击下方按钮复制日报，再在飞书粘贴提交；原文不会放进网址。</p><button id="recognize">识别并核对</button><p id="dirty" class="warning hide">原文已修改，请重新识别后再提交。</p></section>
+<section id="preview" class="hide"><div class="panel"><h2>2 · 核对识别结果</h2><div class="numbers"><div class="number"><strong id="itemCount"></strong><span>项工作</span></div><div class="number"><strong id="hours"></strong><span>申报小时 · 不直接计分</span></div><div class="number"><strong id="unknown"></strong><span>段项目待归类</span></div></div><div class="row"><div><label for="date">这份日报的实际日期</label><input id="date" type="date"></div><div><label for="batchProject">未明确项目的事项，统一归到</label><select id="batchProject"><option value="">逐项选择，或保留待归类</option></select></div></div><p id="dateBasis" class="muted"></p><div id="flags" class="warning hide"></div><p class="muted">已明确的跨项目工时分别保留。「其他待归类」可提交给负责人核对；未知工时留空。数量和完成进度按原事项保留。</p></div><div class="panel"><h3>工时核对提醒 <span id="alertCount"></span></h3><div id="timeAlerts" role="status"></div><p class="muted">提醒不等于虚报或低效。周累计与个人历史比较在飞书后台同步后显示；未触发规则也不代表已经核验。</p><details><summary>查看规则与依据</summary><p class="muted">红色：负数、超过24小时或分项合计冲突，修正后提交。黄色：超过8小时、缺工时、重复事项线索、单项非直播/助播超过4小时。橙色：单日超过12小时，或后台自然周累计达到55小时。4小时和12小时是本应用试点提醒线，不是行业定额。8小时参照标准工时，适用制度需负责人确认。</p><p class="muted">历史比较使用本人同项目同工作类别过去60天至少10个有效日期；改进Z分数绝对值超过3.5且差异超过中位数50%和0.5小时才提示。基线离散程度为0时不判；窗口、样本量和差异门槛为试点设计，不推断效率或质量。</p><p><a href="https://hrss.jl.gov.cn/ldgx/ldyggl/201608/t20160824_2401504.html" target="_blank" rel="noopener">标准工时依据</a> · <a href="https://www.who.int/news/item/17-05-2021-long-working-hours-increasing-deaths-from-heart-disease-and-stroke-who-ilo" target="_blank" rel="noopener">WHO/ILO研究</a> · <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h.htm" target="_blank" rel="noopener">NIST统计方法</a></p></details></div><div id="items"></div><div class="panel"><h3>今日收获</h3><div id="harvest" class="original"></div><p class="muted">保留原文，用于复盘，不按字数或措辞打分。</p><label for="timeExplanation">工时说明（有提醒时可补充）</label><textarea id="timeExplanation" style="min-height:90px" placeholder="例如：包含往返与排队；两个直播场次；临时加班安排；工作量与平时不同。按实际情况说明。"></textarea><label for="evidence">成果链接（可选）</label><input id="evidence" type="url" placeholder="https://…"><div class="footer"><span class="muted">登录飞书后，再点表单内的「提交」。<br>更正日报：重新提交本人当天完整内容。</span><button id="submit">复制日报，打开飞书 ↗</button></div><div id="message" class="message" role="status"></div><a id="plainForm" class="hide" target="_blank" rel="noopener" href="https://p4670xzmqg.feishu.cn/share/base/shrcnEA5RouVdCaOEGHikPnNrub">打开飞书表单，粘贴原文并填写日期</a></div></section><footer>工作原文 → 事项台账 → 月度复核 → 本人确认。工作时长、招聘沟通数、内容数量和进度分别记录，由负责人结合成果核验。</footer></main><script>/* 同一识别器用于浏览器预览与后台；不发起网络请求。 */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.DiaryParser=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
-const D={"meta":{"title":"潜势绩效台","version":"V3.0","date":"2026-09-08"},"base":"https://p4670xzmqg.feishu.cn/base/GF34b04pfa3oZusmrJvchypMnZf","tables":{"T00_参数表":"tblJFTsU8ZUZdJ6i","T01_名册":"tbl5plCigvQYaHl8","T02_岗位KPI库":"tblfuJRrRTYu7Kou","T03_月度目标":"tbldb69QnnFf0oLy","T04_每日工作记录":"tblbePcJHlxlA8iY","T05_周checkin":"tblwU5wznOc7zf3A","T06_支援折抵申请":"tblFfp6Iz9c0ii8R","T07_月度打分":"tblhQwL9RxWKHq2r","T08_KCI记录":"tblE0gTneWKCzHnd","T09_红线记录":"tblb2HdcCBayWfBp","T10_申诉":"tblFQjrz6jAzfQPi","T11_学习课程库":"tblrLtrjjTV724o9","T12_学习记录":"tblFJeEaLnW7Ahcg","T13_半年档位":"tblldc0UBpypaSHa"},"views":{"QS-01":{"T03_月度目标":"vewybJAaIy","T07_月度打分":"vewxFVfcJB","T04_每日工作记录":"vew0qYmTC0","T12_学习记录":"vewIejpfGE","T05_周checkin":"vewsQpVGvX"},"QS-02":{"T03_月度目标":"vewDe4kDvm","T07_月度打分":"vewL5fr3zj","T04_每日工作记录":"vewYAb8Gr6","T12_学习记录":"vewfR4hcml","T05_周checkin":"vew3ALKT0k"},"QS-03":{"T03_月度目标":"vewU6As5gP","T07_月度打分":"vewJyrVCuG","T04_每日工作记录":"vewwLySnVE","T12_学习记录":"vewQxamT7U","T05_周checkin":"vewx0zOAed"},"QS-04":{"T03_月度目标":"vewcgKw1oW","T07_月度打分":"vewCWddB7D","T04_每日工作记录":"vewKognR6O","T12_学习记录":"vewENo4GuH","T05_周checkin":"vewaYh8riY"},"QS-05":{"T03_月度目标":"vewqa3LYW5","T07_月度打分":"vewzsmYuFu","T04_每日工作记录":"vewtX64tKZ","T12_学习记录":"vewkX3IPlP","T05_周checkin":"vewTLpMsyg"},"QS-06":{"T03_月度目标":"vewp8jeDEO","T07_月度打分":"vewnOHInn9","T04_每日工作记录":"vewqeDItbT","T12_学习记录":"vewN2HxcNZ","T05_周checkin":"vewp5CgrKq"},"QS-07":{"T03_月度目标":"vewGwXsHG8","T07_月度打分":"vewrTrEApa","T04_每日工作记录":"vewrNAXHNV","T12_学习记录":"vewEy9lN5H","T05_周checkin":"vewLJtOuFJ"},"QS-08":{"T03_月度目标":"vewxNiiQF6","T07_月度打分":"vewnGI47Qz","T04_每日工作记录":"vew76OCwB7","T12_学习记录":"vewyIMt7iL","T05_周checkin":"vew598m553"},"QS-09":{"T03_月度目标":"vewfXy1gQf","T07_月度打分":"vewsvR4oHu","T04_每日工作记录":"vewUJhpHmS","T12_学习记录":"vewfUTF4b0","T05_周checkin":"vewXWc71lX"}},"emps":[{"code":"QS-01","post":"总经理","cat":"不考核","status":"考核中","route":"B 结果指标型","h":"0","cap":"0","lines":["公司职能"]},{"code":"QS-02","post":"执行负责人/三线总控","cat":"主播","status":"考核中","route":"B 结果指标型","h":"90","cap":"27","lines":["呼市移动","果然好酒"]},{"code":"QS-03","post":"公司 PMO","cat":"非主播","status":"考核中","route":"A 交付验收型","h":"0","cap":"0","lines":["公司职能"]},{"code":"QS-04","post":"质量与方法/项目负责人/培训","cat":"非主播","status":"考核中","route":"B 结果指标型","h":"0","cap":"0","lines":["公司职能","呼市移动"]},{"code":"QS-05","post":"助播/客资管理/合规","cat":"非主播","status":"考核中","route":"A 交付验收型","h":"0","cap":"0","lines":["呼市移动"]},{"code":"QS-06","post":"直播主管/私域与用户运营","cat":"主播","status":"考核中","route":"B 结果指标型","h":"90","cap":"27","lines":["呼市移动","果然好酒","公司职能"]},{"code":"QS-07","post":"主播兼客资整理","cat":"主播","status":"考核中","route":"B 结果指标型","h":"90","cap":"27","lines":["呼市移动","果然好酒"]},{"code":"QS-08","post":"拍摄剪辑兼项目经理","cat":"非主播","status":"考核中","route":"A 交付验收型","h":"0","cap":"0","lines":["呼市移动","果然好酒"]},{"code":"QS-09","post":"主播/经营证据","cat":"主播","status":"考核中","route":"B 结果指标型","h":"90","cap":"27","lines":["公司职能"]}],"kpi":[{"id":"K01","name":"各线场次达标率","posts":["执行负责人/三线总控"],"lines":["呼市移动","果然好酒"],"kj":"当月实际开播场次 ÷ 排期场次(各线合计)","src":"抖音后台开播记录 + 排期表","self":"每周对照排期表勾选","mode":"正向","unit":"%","th":"100","w":"30","jf":"允许","scorer":"创始人","st":"启用","kw":"双开,场次,开播,播了,直播了,直播场,跟播","agg":"求和","q":"今天开播几场?"},{"id":"K02","name":"留资量(各线合计)","posts":["执行负责人/三线总控"],"lines":["呼市移动","果然好酒"],"kj":"当月客资台账有效留资条数(去重、去无效号)","src":"客资台账(指定系统)","self":"台账导出对数","mode":"正向","unit":"条","th":"300","w":"30","jf":"允许","scorer":"创始人","st":"启用","kw":"留资,客资,加微,线索,留电","agg":"求和","q":"今天留资几条?"},{"id":"K03","name":"核销率","posts":["执行负责人/三线总控"],"lines":["呼市移动","果然好酒"],"kj":"当月核销单数 ÷ 售出单数","src":"甲方核销台账 / 抖音来客后台","self":"来客后台截图","mode":"正向","unit":"%","th":"40","w":"20","jf":"允许","scorer":"创始人","st":"启用","kw":"核销,到店,验券","agg":"月末值","q":null},{"id":"K04","name":"退款率","posts":["执行负责人/三线总控"],"lines":["呼市移动","果然好酒"],"kj":"当月退款单数 ÷ 售出单数;≤阈值 100,超阈值 1 倍内 80,2 倍内 60,更高 0","src":"抖音来客后台","self":"来客后台截图","mode":"验收","unit":"%","th":"40","w":"20","jf":"允许","scorer":"创始人","st":"启用","kw":"退款,退单,仅退款","agg":"月末值","q":null},{"id":"K05","name":"留资量(助播团队)","posts":["助播/客资管理/合规"],"lines":["呼市移动"],"kj":"助播团队当月有效留资条数","src":"客资台账","self":"台账导出对数","mode":"正向","unit":"条","th":"200","w":"30","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"加微,客资,留资,留资量,线索","agg":"求和","q":"今天团队留资几条?"},{"id":"K06","name":"办理量(宽带口径)","posts":["助播/客资管理/合规"],"lines":["呼市移动"],"kj":"当月宽带办理量;官方直播间只讲宽带,号卡与合约套餐不计","src":"甲方酬金台账 / 办理系统导出","self":"酬金台账对数","mode":"正向","unit":"户","th":"30","w":"20","jf":"限制","scorer":"执行负责人/三线总控","st":"启用","kw":"宽带,办理,装机,开户,融合","agg":"求和","q":"今天宽带办理几户?"},{"id":"K07","name":"开播前自查完成率","posts":["助播/客资管理/合规"],"lines":["呼市移动"],"kj":"签字的播前闸 D-1 与开播日两阶段自查份数 ÷ 开播场次","src":"播前闸签字件(存三年)","self":"自查表归档目录","mode":"正向","unit":"%","th":"100","w":"20","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"自查,播前,开播前,检查单,签字","agg":"求和","q":"今天签了几份开播前自查?"},{"id":"K08","name":"客资有效率","posts":["助播/客资管理/合规"],"lines":["呼市移动"],"kj":"有效留资 ÷ 总留资(空号、重复、拒访为无效)","src":"客资台账回访结果列","self":"台账筛选","mode":"正向","unit":"%","th":"70","w":"15","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"有效,回访,空号,无效","agg":"月末值","q":null},{"id":"K09","name":"客资录入准时率","posts":["助播/客资管理/合规"],"lines":["呼市移动"],"kj":"当日客资当日录入条数 ÷ 当日总条数(客资管理职责)","src":"客资台账录入时间戳","self":"台账时间列","mode":"正向","unit":"%","th":"95","w":"15","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"录入,整理客资,登记,台账","agg":"月末值","q":null},{"id":"K10","name":"进群率","posts":["直播主管/私域与用户运营"],"lines":["呼市移动","果然好酒"],"kj":"当月新增进群人数 ÷ 触达人数","src":"微信社群后台 / 进群台账","self":"后台截图","mode":"正向","unit":"%","th":"30","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"进群,加群,社群,拉群","agg":"求和","q":"今天进群几人?"},{"id":"K11","name":"核销率(果然)","posts":["直播主管/私域与用户运营"],"lines":["果然好酒"],"kj":"当月核销单数 ÷ 售出单数","src":"订单台账 / 抖音来客","self":"来客后台截图","mode":"正向","unit":"%","th":"50","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"核销,到店,验券,提货","agg":"月末值","q":null},{"id":"K12","name":"复购单数","posts":["直播主管/私域与用户运营"],"lines":["果然好酒"],"kj":"当月同一客户第二次及以上下单单数","src":"订单台账","self":"台账筛选","mode":"正向","unit":"单","th":"30","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"复购,回购,二次下单","agg":"求和","q":"今天复购几单?"},{"id":"K13","name":"退群率","posts":["直播主管/私域与用户运营"],"lines":["果然好酒"],"kj":"当月退群人数 ÷ 期初群人数;≤阈值 100,超阈值按四档","src":"微信社群后台","self":"后台截图","mode":"验收","unit":"%","th":"10","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"退群,退出群","agg":"月末值","q":null},{"id":"K14","name":"留资量","posts":["主播兼客资整理"],"lines":["呼市移动","果然好酒"],"kj":"本人场次有效留资条数","src":"客资台账","self":"台账导出","mode":"正向","unit":"条","th":"100","w":"50","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"留资,客资,加微,线索,留电","agg":"求和","q":"今天留资几条?"},{"id":"K15","name":"客资录入准时率","posts":["主播兼客资整理"],"lines":["呼市移动"],"kj":"当日客资当日录入条数 ÷ 当日总条数","src":"客资台账录入时间戳","self":"台账时间列","mode":"正向","unit":"%","th":"95","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"录入,整理客资,登记,台账","agg":"月末值","q":null},{"id":"K16","name":"客资差错数","posts":["主播兼客资整理"],"lines":["呼市移动"],"kj":"月度抽检差错条数;0 条 100,≤2 条 80,≤5 条 60,更多 0","src":"PMO 抽检记录","self":"—","mode":"验收","unit":"条","th":"2","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"差错,填错,漏填,错号","agg":"求和","q":null},{"id":"K17","name":"经营证据归档准时率","posts":["主播/经营证据"],"lines":["公司职能","呼市移动"],"kj":"当月应归档的经营证据件(合同、结算单、验收件、截图)按期归档数 ÷ 应归档数","src":"经营证据台账 / 归档目录","self":"归档目录核对","mode":"正向","unit":"%","th":"90","w":"50","jf":"允许","scorer":"创始人","st":"启用","kw":"归档,证据,合同,结算单,验收件,存档","agg":"求和","q":"今天归档几件经营证据?"},{"id":"K18","name":"培训交付按期率","posts":["主播/经营证据"],"lines":["公司职能"],"kj":"排期内的培训场次与课件按期交付数 ÷ 排期数;完成 100,延期一周内 80,两周内 60,未完成 0","src":"培训排期表 + 课件归档","self":"排期表勾选","mode":"验收","unit":"%","th":"100","w":"50","jf":"允许","scorer":"创始人","st":"启用","kw":"培训,授课,课件,带教,讲课","agg":"验收","q":null},{"id":"K19","name":"交付准时率","posts":["拍摄剪辑兼项目经理"],"lines":["呼市移动","果然好酒"],"kj":"按约定截止日交付的任务数 ÷ 任务数","src":"T04 成果位置时间戳 / 交付记录","self":"任务清单勾选","mode":"正向","unit":"%","th":"90","w":"35","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"交付,出片,剪辑,发给,口播,成片,拍摄,提交,视频,输出","agg":"求和","q":"今天交付几条?"},{"id":"K20","name":"返工率","posts":["拍摄剪辑兼项目经理"],"lines":["呼市移动","果然好酒"],"kj":"返工任务数 ÷ 交付任务数;≤阈值 100,超阈值按四档","src":"返工单 / 审核记录","self":"返工单","mode":"验收","unit":"%","th":"10","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"返工,重做,重剪,打回,修改","agg":"求和","q":"今天返工几条?"},{"id":"K21","name":"项目里程碑按期率","posts":["拍摄剪辑兼项目经理"],"lines":["呼市移动","果然好酒"],"kj":"按期完成的里程碑数 ÷ 当月里程碑数","src":"项目排期表","self":"排期表勾选","mode":"正向","unit":"%","th":"90","w":"25","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"里程碑,节点,排期,按期","agg":"月末值","q":null},{"id":"K22","name":"发布准时率(并岗承接内容制作)","posts":["拍摄剪辑兼项目经理"],"lines":["呼市移动","果然好酒"],"kj":"按排期发布的条数 ÷ 排期条数","src":"各平台发布记录","self":"发布记录截图","mode":"正向","unit":"%","th":"90","w":"15","jf":"允许","scorer":"执行负责人/三线总控","st":"启用","kw":"上传,上架,发出,发布,推送,笔记","agg":"求和","q":"今天发布几条?"},{"id":"K23","name":"对账准时率","posts":["公司 PMO"],"lines":["公司职能"],"kj":"按约定日完成的对账项 ÷ 应对账项(含并岗承接的财务/客服对账)","src":"对账表","self":"对账表日期列","mode":"正向","unit":"%","th":"100","w":"30","jf":"允许","scorer":"创始人","st":"启用","kw":"对账,核对,账目,结算,酬金","agg":"求和","q":"今天对账完成几项?"},{"id":"K24","name":"制度签收完成率","posts":["公司 PMO"],"lines":["公司职能"],"kj":"已签收人数 ÷ 应签收人数(制度五件、KPI 表、一页纸)","src":"签收记录","self":"签收记录","mode":"正向","unit":"%","th":"100","w":"25","jf":"允许","scorer":"创始人","st":"启用","kw":"签收,签字,回收,确认书","agg":"求和","q":"今天收回几份签收?"},{"id":"K25","name":"工资表差错数","posts":["公司 PMO"],"lines":["公司职能"],"kj":"月度工资表被财务验算发现的差错数;0 条 100,1 条 80,2 条 60,更多 0","src":"财务验算记录","self":"—","mode":"验收","unit":"条","th":"0","w":"25","jf":"允许","scorer":"创始人","st":"启用","kw":"工资表,差错,验算","agg":"月末值","q":null},{"id":"K26","name":"机检覆盖率(日报)","posts":["公司 PMO"],"lines":["公司职能"],"kj":"当月跑过日报机检的周数 ÷ 应跑周数(06 号脚本)","src":"脚本待核清单归档","self":"待核清单文件","mode":"正向","unit":"%","th":"100","w":"20","jf":"允许","scorer":"创始人","st":"启用","kw":"机检,相似度,日报核查","agg":"月末值","q":null},{"id":"K27","name":"机检覆盖率(交付件)","posts":["质量与方法/项目负责人/培训"],"lines":["公司职能","呼市移动"],"kj":"当月出具机检结论的交付件数 ÷ 应机检件数","src":"机检记录","self":"机检记录","mode":"正向","unit":"%","th":"100","w":"30","jf":"允许","scorer":"创始人","st":"启用","kw":"机检,核验,校验,查重","agg":"求和","q":"今天机检几件?"},{"id":"K28","name":"口径勘误闭合数","posts":["质量与方法/项目负责人/培训"],"lines":["公司职能","呼市移动"],"kj":"当月提出并闭合的口径勘误条数","src":"勘误台账","self":"勘误台账","mode":"正向","unit":"条","th":"3","w":"25","jf":"允许","scorer":"创始人","st":"启用","kw":"勘误,口径,纠错,闭合","agg":"求和","q":"今天闭合几条口径勘误?"},{"id":"K29","name":"复盘准时率","posts":["质量与方法/项目负责人/培训"],"lines":["公司职能"],"kj":"按期完成的复盘数 ÷ 应复盘数","src":"复盘纪要","self":"纪要日期","mode":"正向","unit":"%","th":"100","w":"20","jf":"允许","scorer":"创始人","st":"启用","kw":"复盘,总结会,回顾","agg":"求和","q":null},{"id":"K30","name":"项目里程碑按期率(项目负责人)","posts":["质量与方法/项目负责人/培训"],"lines":["公司职能"],"kj":"所负责项目当月里程碑按期数 ÷ 里程碑数","src":"项目排期表","self":"排期表勾选","mode":"正向","unit":"%","th":"90","w":"25","jf":"允许","scorer":"创始人","st":"启用","kw":"里程碑,节点,排期","agg":"月末值","q":null}],"forms":{"T04_每日工作记录":"https://p4670xzmqg.feishu.cn/share/base/shrcnFTWoVVm5GkaCiDEX1vwkFc","T05_周checkin":"https://p4670xzmqg.feishu.cn/share/base/shrcnJQQw9IbS3IBJLxLTSi4wae","T06_支援折抵申请":"https://p4670xzmqg.feishu.cn/share/base/shrcnjk5NRAvl3v4TFX3kot1emg","T10_申诉":"https://p4670xzmqg.feishu.cn/share/base/shrcniXYFJI9zRtLZWsvZlmybZf","T12_学习记录":"https://p4670xzmqg.feishu.cn/share/base/shrcnog6dFoMtnybJSDMDvRKUPh"},"learn":"https://xingpengyue1-pixel.github.io/qs-learn/"};const P='qs_today_20260908_';
-const load=(k,d)=>{try{const v=localStorage.getItem(P+k);return v?JSON.parse(v):d;}catch(e){return d;}};
-const save=(k,v)=>{try{localStorage.setItem(P+k,JSON.stringify(v));}catch(e){}};
-const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
-const isoWeek=d=>{const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return t.getUTCFullYear()+'-W'+String(Math.ceil(((t-y)/864e5+1)/7)).padStart(2,'0');};
-const pre=(u,kv)=>u.split('?')[0]+'?'+Object.keys(kv).filter(k=>kv[k]!==''&&kv[k]!=null).map(k=>'prefill_'+encodeURIComponent(k)+'='+encodeURIComponent(kv[k])).join('&');
-let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1800);}
-let profile=load('profile',{code:''});
-let draft=load('draft',{date:'',vals:{},text:''});
-if(draft.date!==today())draft={date:today(),vals:{},text:''};
-let submitted=load('submitted',{});
-const me=()=>D.emps.find(e=>e.code===profile.code);
-const myKpi=()=>{const e=me();return e?D.kpi.filter(k=>k.posts.indexOf(e.post)>=0):[];};
-const HOURQ={id:'HOURS',name:'直播时长',unit:'小时',q:'今天播了几小时?',kw:'直播,开播,播了,时长'};
-const askList=()=>{const e=me();const base=myKpi().filter(k=>k.q);const l=(e&&e.cat==='主播')?[HOURQ].concat(base):base;return l.slice(0,3);};
-const viewUrl=t=>{const e=me();return e&&D.views[e.code]&&D.views[e.code][t]?D.base+'?table='+D.tables[t]+'&view='+D.views[e.code][t]:'';};
-// ---- 本地识别:关键词 + 数字(带日期剔除与单位校验)----
-const DATEPAT=/^\s*\d{8}\s*$|\d{4}[.\-\/年]\d{1,2}[.\-\/月]\d{1,2}|^\s*\d{4}[.\-\/]\d{1,2}|\d+\s*月(?![薪])|第\s*[一二三四1234]\s*季度|\d{4}年/;
-const NEGWORD=/表汇总|汇总表|排期表|模板|待办|草稿/;
-function detect(text){
- const out=[];const e0=me();const ks=(e0&&e0.cat==='主播')?[HOURQ].concat(myKpi()):myKpi();const seen={};
- const segs=text.replace(/\s+(?=[0-9]+\s*[.、)）])/g,'\n').split(/[\n;；,，。]/).filter(s=>s.trim());
- segs.forEach(seg=>{
-  let seg0=seg.replace(/^\s*[0-9]+\s*[.、)）:：]\s*/,'');
-  // 剔除日期片段后再找数字
-  const clean=seg0.replace(/\d{8}/g,' ').replace(/\d{4}[.\-\/年]\d{1,2}[.\-\/月]?\d{0,2}/g,' ').replace(/\d+\s*月(?![薪])/g,' ').replace(/第\s*[一二三四1234]\s*季度/g,' ');
-  if(NEGWORD.test(seg0))return;
-  const nm=clean.match(/(\d+(?:\.\d+)?)\s*(条|场|小时|个|单|户|篇|次|人|份|件)/);
-  if(!nm)return;                                  // 必须「数字+单位」,裸数字不认
-  const val=parseFloat(nm[1]);const unit=nm[2];
-  if(val<=0||val>2000)return;
-  const pos=clean.indexOf(nm[0]);
-  let best=null,bestScore=0;
-  ks.forEach(k=>{
-   const kws=(k.kw||'').split(/[,，]/).filter(x=>x.trim());
-   let sc=0;
-   kws.forEach(w=>{if(!w)return;const at=clean.indexOf(w);if(at<0)return;
-    const dist=Math.abs(at-pos);if(dist>25)return;   // 关键词须贴近数字
-    sc+=w.length*(dist<=8?2:1);});
-   if(sc===0)return;
-   if(k.unit&&unit){ if(k.unit===unit)sc+=4; else sc-=2; }   // 单位不符重罚
-   if(sc>bestScore){bestScore=sc;best=k;}
-  });
-  if(best&&bestScore>=1){const key=best.id+'@'+val;if(seen[key])return;seen[key]=1;out.push({id:best.id,name:best.name,unit:best.unit||unit,val:val,seg:seg0.trim(),score:bestScore});}
- });
- return out;
+const VERSION='2.2.0';
+const PROJECTS=['呼市移动','果然好酒','公司职能','其他待归类'];
+const round=n=>Math.round(n*10000)/10000;
+function validDate(y,m,d){const t=new Date(Date.UTC(y,m-1,d));return t.getUTCFullYear()===y&&t.getUTCMonth()===m-1&&t.getUTCDate()===d;}
+function dateValue(s){const m=s.trim().replace(/\\\s*$/,'').trim().match(/^(20\d{2})(?:[.\/-](\d{1,2})[.\/-](\d{1,2})|(\d{2})(\d{2}))$/);if(!m)return null;const y=+m[1],mo=+(m[2]||m[4]),d=+(m[3]||m[5]);return {raw:s,date:validDate(y,mo,d)?`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`:null,year:y,month:mo,day:d};}
+function category(s){
+ if(/助播/.test(s))return '助播';
+ if(/调试|开.*直播间|直播间.*准备/.test(s))return '直播准备';
+ if(/培训|测试|教学|学习/.test(s))return '培训学习';
+ if(/文案|剪辑|拍摄|贴片|小红书|视频选题|设计/.test(s))return '内容制作';
+ if(/发票|工资|补助|绩效表|绩效优化|快递|招聘|直聘|试岗|入职/.test(s))return '行政人事';
+ if(/定稿|合作|合同|需求|项目.*沟通|对接|方案/.test(s))return '项目推进';
+ if(/直播/.test(s)&&!/数据|截图|贴片|调试|方案|准备|培训|学习|沟通|基地|计划|合同|开.*直播间/.test(s))return '直播';
+ if(/电话|客户|留资|派单|评论|门店|资质|账号|办卡|福袋|数据/.test(s))return '运营服务';
+ return '一般工作';
 }
-function supportHit(text){return /支援|顶班|外场|配合拍摄|帮.*直播|协助直播/.test(text);}
-// ---- 渲染 ----
-function render(){
- const e=me();document.getElementById('who').textContent=e?(e.code+' · '+e.post):'未选编号';
- const m=document.getElementById('main');let h='';
- if(!e){h+='<div class="card"><h2>第一次打开:选你的编号</h2><select data-a="code"><option value="">请选择</option>'+D.emps.map(x=>'<option value="'+x.code+'">'+x.code+' · '+esc(x.post||'')+'</option>').join('')+'</select><p class="muted">只选一次,存在这台手机上;不用登录、不填姓名。</p></div>';m.innerHTML=h;bind();return;}
- const sub=submitted[today()];
- if(sub)h+='<div class="done">今天已提交 · '+esc(sub)+' · 需要补充可以再提交一次</div>';
- const asks=askList();
- h+='<div class="card"><h2>今天(约 30 秒)</h2>';
- if(asks.length){asks.forEach(k=>{h+='<div class="q"><label>'+esc(k.q)+'</label><input type="number" inputmode="decimal" data-a="v" data-id="'+k.id+'" value="'+esc(draft.vals[k.id]||'')+'" placeholder="'+esc(k.unit||'')+'"></div>';});}
- else h+='<p class="muted">你的岗位当月不按日计数,直接写一句话即可。</p>';
- h+='<label class="f">今天做了什么(可选,一句话或直接粘贴你原来的写法)</label><textarea data-a="text" rows="3" placeholder="例:留资36条,剪辑2条,下午支援项目3小时">'+esc(draft.text)+'</textarea>';
- const hits=draft.text?detect(draft.text):[];
- if(hits.length){h+='<p class="muted" style="margin-top:8px">自动识别到(勾掉不要的):</p>';hits.forEach((x,i)=>{h+='<div class="hit"><input type="checkbox" data-a="hit" data-i="'+i+'" '+(draft.off&&draft.off[x.id]?'':'checked')+'><div><b>'+esc(x.name)+' '+x.val+esc(x.unit)+'</b><br><span class="muted">'+esc(x.seg)+'</span></div></div>';});}
- if(draft.text&&supportHit(draft.text)&&me().cat==='主播')h+='<p class="muted"><span class="tag amber">支援</span>识别到支援类工作,提交后会生成折抵申请草稿给批准人,你不用另外填表。</p>';
- h+='<a class="btn p big" style="margin-top:12px" data-a="submit">提交今天</a>';
- h+='<p class="muted" style="margin-top:8px">日期、岗位、指标、单位、证据位置由系统自动带,不用你填。</p></div>';
- // 我的本月
- const days=Object.keys(submitted).filter(d=>d.slice(0,7)===today().slice(0,7)).length;
- const nn=nextNode();
- h+='<div class="card"><h2>我的本月</h2><div class="grid"><div class="stat"><b>'+days+'</b><span>已提交天数</span></div><div class="stat"><b>'+nn.day+' 日</b><span>'+esc(nn.label)+'</span></div><div class="stat"><b>'+(nn.days===0?'今天':nn.days+' 天')+'</b><span>还有</span></div></div>';
- const v7=viewUrl('T07_月度打分'),v3=viewUrl('T03_月度目标');
- h+='<div class="row" style="margin-top:10px">'+(v7?'<a class="btn s" href="'+esc(v7)+'" target="_blank">我的打分与签字</a>':'')+(v3?'<a class="btn s" href="'+esc(v3)+'" target="_blank">我的目标</a>':'')+'</div></div>';
- // 更多(折叠)
- h+='<div class="card"><details><summary>更多(周 check-in、折抵、申诉、学习、我的记录)</summary><div class="row" style="margin-top:10px">';
- h+='<a class="btn s" href="'+esc(pre(D.forms['T05_周checkin'],{'周次':isoWeek(new Date())}))+'" target="_blank">周 check-in</a>';
- h+='<a class="btn s" href="'+esc(D.forms['T06_支援折抵申请'])+'" target="_blank">折抵申请</a>';
- h+='<a class="btn s" href="'+esc(D.forms['T10_申诉'])+'" target="_blank">申诉</a>';
- h+='<a class="btn s" href="'+esc(D.learn)+'" target="_blank">学习与自测</a>';
- h+='<a class="btn s" href="full.html" target="_blank">完整版(本岗 KPI 与自算)</a>';
- [['T04_每日工作记录','我的日报'],['T05_周checkin','我的 check-in'],['T12_学习记录','我的学习']].forEach(x=>{const u=viewUrl(x[0]);if(u)h+='<a class="btn s" href="'+esc(u)+'" target="_blank">'+x[1]+'</a>';});
- h+='</div><p class="muted" style="margin-top:10px">换人用请点这里 <span class="btn s" style="padding:4px 10px;font-size:13px" data-a="reset">重选编号</span></p></details></div>';
- h+='<div class="foot">'+esc(D.meta.title)+' '+esc(D.meta.version)+' · '+esc(D.meta.date)+' · 记录进飞书,本页只存编号与草稿</div>';
- m.innerHTML=h;bind();
+function project(s){
+ const matches=[];for(const [n,re] of [['呼市移动',/呼市移动|呼和浩特移动|移动大号|呼分/g],['果然好酒',/果然好酒/g]]){for(const m of s.matchAll(re))matches.push({name:n,at:m.index});}
+ if(matches.length){const uniq=[...new Set(matches.map(m=>m.name))];return {name:matches.sort((a,b)=>b.at-a.at)[0].name,explicit:true,multiple:uniq.length>1};}
+ if(/快递|发票|工资|补助|绩效|直聘|招聘|试岗|入职|高德电话/.test(s))return {name:'公司职能',explicit:false,multiple:false};
+ return {name:'其他待归类',explicit:false,multiple:false};
 }
-function nextNode(){const d=new Date(),day=d.getDate();const ns=[[5,'初评'],[10,'复核'],[15,'签字']];for(const[n,l]of ns){if(day<=n)return{days:n-day,label:l+'截止',day:n};}const nx=new Date(d.getFullYear(),d.getMonth()+1,5);return{days:Math.round((nx-d)/864e5),label:'初评截止',day:5};}
-function bind(){document.querySelectorAll('[data-a]').forEach(el=>{const ev=(el.tagName==='INPUT'&&el.type!=='checkbox')||el.tagName==='TEXTAREA'?'input':(el.tagName==='SELECT'||el.type==='checkbox'?'change':'click');el.addEventListener(ev,e=>A[el.dataset.a](el,e));});}
-let tt;
-const A={
- code:el=>{profile.code=el.value;save('profile',profile);render();},
- v:el=>{draft.vals[el.dataset.id]=el.value;save('draft',draft);},
- text:el=>{draft.text=el.value;save('draft',draft);clearTimeout(tt);tt=setTimeout(()=>{const p=document.activeElement===el?el.selectionStart:null;render();if(p!=null){const n=document.querySelector('textarea[data-a=text]');if(n){n.focus();n.setSelectionRange(p,p);}}},700);},
- hit:el=>{const hits=detect(draft.text);const x=hits[+el.dataset.i];if(!x)return;draft.off=draft.off||{};if(el.checked)delete draft.off[x.id];else draft.off[x.id]=1;save('draft',draft);},
- reset:()=>{profile={code:''};save('profile',profile);render();},
- submit:()=>{
-  const e=me();const asks=askList();const hits=detect(draft.text).filter(x=>!(draft.off&&draft.off[x.id]));
-  const parts=[];const kv={'日期':today()};
-  asks.forEach(k=>{const v=draft.vals[k.id];if(v!==''&&v!=null)parts.push({id:k.id,name:k.name,unit:k.unit,val:parseFloat(v)});});
-  hits.forEach(x=>{if(!parts.some(p=>p.id===x.id))parts.push(x);});
-  if(!parts.length&&!draft.text.trim()){toast('填一个数字或写一句话再提交');return;}
-  const main=parts.filter(p=>p.id!=='HOURS')[0]||parts[0];
-  if(main){kv['结果数字']=main.val;kv['单位']=main.unit||'';}
-  const desc=(parts.length?parts.map(p=>p.name+' '+p.val+(p.unit||'')).join(';'):'')+(draft.text.trim()?(parts.length?' | ':'')+draft.text.trim():'');
-  kv['结果描述']=desc.slice(0,900);
-  const idx=parts.map(p=>p.id+'='+p.val).join(',');
-  if(idx)kv['临时工作']='[AUTO]'+idx;
-  const u=pre(D.forms['T04_每日工作记录'],kv);
-  submitted[today()]=parts.length?parts.map(p=>p.name+' '+p.val+(p.unit||'')).join('、'):'一句话';
-  save('submitted',submitted);
-  const w=window.open(u,'_blank');if(!w)location.href=u;
-  toast('已带入表单,点提交即可');setTimeout(render,300);
+function chineseNumber(s){if(/^\d/.test(s))return +s;const nums={'零':0,'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};if(s==='十')return 10;if(s.includes('十')){const [a,b]=s.split('十');return (a?nums[a]:1)*10+(b?nums[b]:0);}return nums[s];}
+function parseItem(line,index){
+ const text=line.replace(/^\s*\d{1,2}\s*\\?[.、．]\s*/,'').trim();const flags=[];
+ if(/-\s*\d+(?:\.\d+)?\s*(?:小时|[hH])/.test(text))flags.push('工时不能为负数，请修正原文');
+ if(/(?:\d+(?:\.\d+)?[eE][+-]?\d+|\d+[:：]\d+|[一二三四五六七八九十]+|\d+\s*[-~～至]\s*\d+)\s*(?:小时|分钟|[hHmM])/.test(text))flags.push('工时格式暂不支持，请改为明确的小时或分钟数，请修正原文');
+ if(/-\s*(?:\d+(?:\.\d+)?\s*(?:分钟|[mM](?:in)?)|半小时)/.test(text))flags.push('工时不能为负数，请修正原文');
+ const duration=/(\d+(?:\.\d+)?)\s*(?:小时|[hH](?![a-zA-Z]))(?:\s*(?:(\d+(?:\.\d+)?)\s*(?:分钟|[mM](?:in)?(?![a-zA-Z]))|(半)))?|半小时|(\d+(?:\.\d+)?)\s*(?:分钟|[mM](?:in)?(?![a-zA-Z]))/g;
+ const hours=[...text.matchAll(duration)].map(m=>({value:round(m[1]!==undefined?+m[1]+(m[2]?+m[2]/60:0)+(m[3]?0.5:0):m[4]!==undefined?+m[4]/60:0.5),at:m.index,end:m.index+m[0].length,ignore:false}));
+ for(let i=0;i<hours.length;i++){
+  const h=hours[i],prefix=text.slice(0,h.at);
+  if(/(?:共|合计|总计)\s*$/.test(prefix)&&hours.length>1){h.ignore=true;h.aggregate=true;}
+  if(i&&/^\s*$/.test(text.slice(hours[i-1].end,h.at))&&hours[i-1].value===h.value){h.ignore=true;h.duplicate=true;}
  }
+ const last=hours[hours.length-1];
+ if(last&&hours.length>1&&/[（(]\s*$/.test(text.slice(0,last.at))&&/^[）)]?\s*$/.test(text.slice(last.end))){
+  const others=hours.slice(0,-1).filter(h=>!h.ignore),sum=round(others.reduce((a,h)=>a+h.value,0));
+  if(others.length){last.ignore=true;last.aggregate=true;if(sum!==last.value)flags.push('括号总工时与分项不符，请修正原文');}
+ }
+ const core=hours.filter(h=>!h.ignore);const total=core.length?round(core.reduce((a,h)=>a+h.value,0)):null;
+ for(const h of hours.filter(h=>h.aggregate))if(total!==null&&h.value!==total)flags.push('合计工时与分项不符，请修正原文');
+ if(total!==null&&(total<0||total>24))flags.push('单项工时超出0至24小时，请核对');
+ if(total===null)flags.push('未填写工时');
+ const segments=[];let start=0;
+ for(const h of core){const context=text.slice(start,h.at).replace(/^[，,、；;\s]+/,'').replace(/[（(]\s*$/,'');let pr=project(context);const cat=category(context||text);let metric=null;
+  if(pr.multiple&&core.length===1){pr={name:'其他待归类',explicit:false,multiple:true};flags.push('多个项目共用一段工时，需拆分后再提交');}
+  const planned=/^(?:明天|明日|明早|计划|预计|准备于|下周)/.test(context.trim());
+  if(cat==='直播'&&!planned)metric={name:'直播小时',value:h.value};
+  segments.push({number:segments.length+1,context:context||text,project:pr.name,project_basis:pr.explicit?'原文明确':pr.name==='公司职能'?'按事项性质归类':'待本人补充',hours:h.value,category:cat,planned,metric});start=h.end;
+ }
+ if(!segments.length){const pr=project(text);segments.push({number:1,context:text,project:pr.name,project_basis:pr.explicit?'原文明确':pr.name==='公司职能'?'按事项性质归类':'待本人补充',hours:null,category:category(text),planned:/^(?:明天|明日|计划|预计|下周)/.test(text),metric:null});}
+ const progress=[...text.matchAll(/(?:完成|进度)\s*(\d+(?:\.\d+)?)\s*[%％]/g)].map(m=>+m[1]);if(progress.some(p=>p<0||p>100))flags.push('进度百分比超出范围');
+ const quantities=[...text.matchAll(/(\d+(?:\.\d+)?|[零一二两三四五六七八九十]{1,3})\s*(人|条|家|张|个|份|项|单|户|场|件)(?!小时)/g)].map(m=>({value:chineseNumber(m[1]),unit:m[2],context:text.slice(Math.max(0,m.index-14),m.index+m[0].length)})).filter(q=>Number.isFinite(q.value));
+ const planned=segments.every(x=>x.planned);if(planned)flags.push('后续计划不计入当日实际工时');
+ if(/明天|明日|明早|三日内|下周/.test(text)&&!planned)flags.push('含后续计划，付款或发送等动作尚不能视为已完成');
+ return {number:index,raw:line,text,category:category(text),hours:total,actual_hours:segments.some(s=>!s.planned&&s.hours!==null)?round(segments.filter(s=>!s.planned&&s.hours!==null).reduce((a,s)=>a+s.hours,0)):null,segments,quantities,progress:progress.length?progress[0]:null,status:planned?'后续计划':progress.some(n=>n<100)?'进行中':'申报完成，待核验',flags:[...new Set(flags)]};
+}
+function parse(raw,options={}){
+ raw=String(raw||'').replace(/\r\n?/g,'\n');const today=options.today||new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});const lines=raw.split('\n').map(x=>x.trim()).filter(Boolean);const dates=lines.map(dateValue).filter(Boolean);const harvestCount=lines.filter(x=>/^今日收获/.test(x)).length;const multi=dates.length>1||harvestCount>1;const detected=dates[0]||null;let date=detected?.date||(options.defaultDate===undefined?today:options.defaultDate);const flags=[];let dateIssue='';
+ if(multi)flags.push('检测到多份日报，请按本人、每天分别提交');
+ if(detected&&!detected.date){date=null;dateIssue='原文日期无效，请核对日期';}
+ if(!detected&&!date){dateIssue='原文及提交日期缺失，请本人指定日期';}
+ if(date&&date>today){dateIssue='原文日期晚于今天，请本人确认正确日期';date=null;}
+ if(options.date){const d=dateValue(options.date);if(!d?.date||d.date>today){dateIssue='指定日期无效或晚于今天';date=null;}else{date=d.date;dateIssue='';}}
+ let harvesting=false;const harvest=[];const work=[];
+ for(const line of lines){
+  if(dateValue(line))continue;
+  if(/^今日收获/.test(line)){harvesting=true;const a=line.replace(/^今日收获\s*[:：，,]?\s*/,'');if(a)harvest.push(a);continue;}
+  if(/^工作总结\s*[:：]?\s*$/.test(line)){harvesting=false;continue;}
+  if(/^【系统验收/.test(line))continue;
+  if(harvesting){harvest.push(line);continue;}
+  if(/^\d{1,2}\s*\\?[.、．]/.test(line)||/小时|分钟|\d\s*[hHmM]\b/.test(line))work.push(line);
+  else if(work.length)work[work.length-1]+=' '+line;
+  else if(line)flags.push('未归入工作事项：'+line.slice(0,35));
+ }
+ const items=work.map((s,i)=>parseItem(s,i+1));const overrides={};
+ for(const line of String(options.projects||'').split('\n')){const m=line.match(/^事项(\d+)\.(\d+)\s*[:：]\s*(.+?)\s*$/);if(m&&PROJECTS.includes(m[3]))overrides[m[1]+'.'+m[2]]=m[3];}
+ for(const item of items)for(const seg of item.segments){const key=item.number+'.'+seg.number;if(overrides[key]){seg.project=overrides[key];seg.project_basis='本人选择';}}
+ const known=items.filter(i=>i.actual_hours!==null);const total=known.length?round(known.reduce((a,i)=>a+i.actual_hours,0)):null;
+ if(total!==null&&total>24)flags.push('当日申报总工时超过24小时，请核对');
+ if(!items.length)flags.push('没有识别到工作事项');
+ if(dateIssue)flags.push(dateIssue);
+ const unknown=items.flatMap(i=>i.segments.filter(s=>s.project==='其他待归类').map(s=>`事项${i.number}.${s.number}`));
+ const result={version:VERSION,date,date_raw:detected?.raw||null,date_basis:options.date?'本人指定':detected?'原文日期':'原文无日期，采用提交当天',date_issue:dateIssue,multiple_reports:multi,items,harvest:harvest.join('\n'),total_hours:total,missing_hours:items.filter(i=>i.hours===null).length,unassigned:unknown,flags:[...new Set(flags)],test_mode:options.testMode===true};result.alerts=timeAlerts(result);return result;
+}
+
+// R12、R4、重复事项是本应用试点规则，不是行业劳动定额。
+const TIME_RULES={dailyStandard:8,dailyPriority:12,longItem:4,weeklyStandard:40,weeklyHealth:55};
+function timeAlerts(p){
+ const a=[];const add=(code,level,message,basis,action,item=null)=>a.push({code,level,message,basis,action,item});
+ const all=p.flags.concat(p.items.flatMap(i=>i.flags));
+ if(all.some(s=>/超过24|超出0至24|不能为负|工时与分项不符|工时格式暂不支持/.test(s)))add('R01','红色需修正','存在非法工时或分项与合计冲突','数值与算术校验','修正原文后重新识别；修正前不计入汇总');
+ if(p.total_hours!==null&&p.total_hours<=24){
+  if(p.total_hours>TIME_RULES.dailyPriority)add('R12','橙色重点核对','当日申报'+p.total_hours+'小时，超过12小时试点提醒线','本应用试点阈值，不是法定时限','核对休息、等待、并行及跨日任务，补充起止时间或安排说明');
+  else if(p.total_hours>TIME_RULES.dailyStandard)add('R08','黄色提示','当日申报'+p.total_hours+'小时，超过8小时标准工时参照','CN8：每日8小时标准工时；适用制度须核对','说明加班、值守、出差等情况，由负责人核对工作安排');
+ }
+ const seen=new Map();
+ for(const i of p.items){
+  if(i.hours===null&&!i.segments.every(s=>s.planned))add('R02','黄色提示','事项'+i.number+'未填写工时','原文缺失，不补0','有实际投入请补时长；确实未统计可说明',i.number);
+  if(i.actual_hours===0&&i.quantities.some(q=>q.value>0))add('R03','黄色提示','事项'+i.number+'有成果数量但工时为0','数量与工时组合核对','核对是否批量导入、自动化处理或工时漏记',i.number);
+  if(i.actual_hours>TIME_RULES.longItem&&!['直播','助播'].includes(i.category))add('R04','黄色提示','事项'+i.number+'单项投入超过4小时，建议补充阶段或工作量','本应用试点阈值，不是岗位标准耗时','说明数量、复杂度、等待或分阶段投入；保留合理长任务',i.number);
+  const norm=i.text.replace(/\s|[（()）。，,；;、]/g,'');
+  if(seen.has(norm))add('R05','黄色提示','事项'+i.number+'与事项'+seen.get(norm)+'文字和时长相同，可能重复','文本完全一致，仅是重复线索','确认是否不同场次；重复则修正，确有两次请说明',i.number);else seen.set(norm,i.number);
+  if(/同时|并行|一边.*一边/.test(i.text)&&i.segments.length>1)add('R06','黄色提示','事项'+i.number+'提到并行工作，请核对是否重复累计同一时段','原文线索；没有起止时间不能认定重叠','说明起止时间与分摊方法',i.number);
+ }
+ return a;
+}
+return {VERSION,PROJECTS,TIME_RULES,parse,parseItem,timeAlerts};
+});
+</script><script>
+const FORM='https://p4670xzmqg.feishu.cn/share/base/shrcnEA5RouVdCaOEGHikPnNrub';const $=id=>document.getElementById(id);let result=null,recognized='',selection={};
+const today=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});$('date').max=today;
+for(const p of DiaryParser.PROJECTS.filter(p=>p!=='其他待归类')){const o=document.createElement('option');o.value=p;o.textContent=p;$('batchProject').append(o);}
+function element(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function projectText(){return Object.entries(selection).map(([k,v])=>'事项'+k+'：'+v).join('\n');}
+function blockers(p){return !p.date||p.multiple_reports||!p.items.length||[...p.flags,...p.items.flatMap(i=>i.flags)].some(s=>/请修正原文|超过24|超出0至24|需拆分后|超出范围/.test(s));}
+function paintAlerts(){const list=result.alerts||[];$('alertCount').textContent=list.length?'· '+list.length+'条':'';$('timeAlerts').replaceChildren();if(!list.length)$('timeAlerts').append(element('p','未触发本页工时规则。','muted'));for(const a of list){const box=element('div',undefined,'warning');if(a.level==='红色需修正'){box.style.background='#fde8e6';box.style.color='#922c24';}else if(a.level==='橙色重点核对'){box.style.background='#fff0dd';box.style.color='#883f00';}box.append(element('strong',a.level+' · '+a.message),element('div',a.action),element('div','依据：'+a.basis,'muted'));$('timeAlerts').append(box);}}
+function update(){result=DiaryParser.parse(recognized,{today,date:$('date').value||undefined,projects:projectText()});$('hours').textContent=result.total_hours===null?'未填':result.total_hours;$('unknown').textContent=result.unassigned.length;$('submit').disabled=blockers(result)||$('raw').value!==recognized;$('flags').textContent=result.flags.join('\n');$('flags').classList.toggle('hide',!result.flags.length);$('dateBasis').textContent=(result.date_raw?'原文日期：'+result.date_raw+'。 ':'')+result.date_basis+(result.date_issue?'；'+result.date_issue:'');paintAlerts();}
+function render(){update();$('itemCount').textContent=result.items.length;$('items').replaceChildren();for(const i of result.items){const card=element('article',undefined,'item');for(const a of result.alerts.filter(a=>a.item===i.number))card.append(element('div',a.level+'：'+a.message,'warning'));card.append(element('h3','事项 '+i.number+' · '+i.category),element('div',i.text,'original'));const quantities=i.quantities.map(q=>q.context+'（'+q.value+q.unit+'）').join('；');card.append(element('p','申报工时：'+(i.actual_hours===null?'未填或仅计划':i.actual_hours+'小时')+' · '+i.status+(i.progress!==null?' · 完成进度 '+i.progress+'%':''),'facts'));if(quantities)card.append(element('p','原文数量：'+quantities+'。数量含义以原句核验。','facts'));if(i.flags.length)card.append(element('div',i.flags.join('\n'),'warning'));for(const s of i.segments){const key=i.number+'.'+s.number;const row=element('div',undefined,'segment');const label=element('label','事项'+key+' · '+s.context+' · '+(s.hours===null?'工时未填':s.hours+'小时')+' · '+s.category);label.htmlFor='project-'+key;const select=element('select');select.id='project-'+key;for(const p of DiaryParser.PROJECTS){const o=element('option',p);o.value=p;select.append(o);}select.value=s.project;select.addEventListener('change',()=>{selection[key]=select.value;update();});row.append(label,select);card.append(row);}$('items').append(card);}$('harvest').textContent=result.harvest||'原文未填写';}
+$('recognize').onclick=()=>{if(!$('raw').value.trim()){alert('请先粘贴本人当天日报。');return;}recognized=$('raw').value;selection={};$('date').value='';result=DiaryParser.parse(recognized,{today});$('date').value=result.date||'';$('dirty').classList.add('hide');$('preview').classList.remove('hide');$('message').textContent='';render();$('preview').scrollIntoView({behavior:'smooth',block:'start'});};
+$('raw').oninput=()=>{if(result){$('dirty').classList.toggle('hide',$('raw').value===recognized);$('submit').disabled=true;}};$('date').onchange=update;
+$('batchProject').onchange=()=>{if(!$('batchProject').value)return;for(const i of result.items)for(const s of i.segments)if(s.project==='其他待归类')selection[i.number+'.'+s.number]=$('batchProject').value;render();$('batchProject').value='';};
+$('submit').onclick=async()=>{update();if(blockers(result)||$('raw').value!==recognized)return;const evidence=$('evidence').value.trim();if(evidence&&!/^https?:\/\//i.test(evidence)){alert('成果链接请以 https:// 或 http:// 开头。');return;}
+// 不将日报、项目明细、解释或成果链接放入 URL；复制失败时保留手动路径。
+const explanation=$('timeExplanation').value.trim();const u=new URL(FORM);u.searchParams.set('prefill_补报日期',result.date);$('plainForm').href=u.href;$('plainForm').classList.remove('hide');$('plainForm').textContent='打开飞书，粘贴到「日报原文」';
+let copied=false;try{await navigator.clipboard.writeText(recognized);copied=true;}catch(e){}
+$('message').replaceChildren(element('p',copied?'日报已复制。打开飞书后粘贴到「日报原文」，核对日期 '+result.date+'，再提交。':'未能自动复制。请手动复制上方日报，再打开飞书粘贴，日期填写 '+result.date+'。'));
+for(const [label,value] of [['项目归属补充',projectText()],['工时异常说明',explanation],['成果链接',evidence]])if(value){const box=element('div');box.append(element('p','请同时填写「'+label+'」：'),element('div',value,'original'));const btn=element('button','复制'+label,'secondary');btn.type='button';btn.onclick=async()=>{try{await navigator.clipboard.writeText(value);btn.textContent='已复制';}catch(e){btn.textContent='请手动复制上方内容';}};box.append(btn);$('message').append(box);}
+if(copied)window.open(u.href,'_blank','noopener');
 };
-render();
-</script>
-</body>
-</html>
+</script></body></html>
